@@ -1,0 +1,60 @@
+Since you're learning this for DevOps/networking, you mainly need 8-bit binary (0–255) at first.
+
+1. The only thing you need to remember
+
+Each binary position has a power of 2:
+
+2^7 = 128 
+2^6 = 64
+2^5 = 32
+2^4 = 16
+2^3 = 8
+2^2 = 4
+2^1 = 2
+2^0 = 1
+********************************************
+Bit position 	Value	Sitting postion	
+7		128	1
+6		64	2
+5		32	3
+4		16	4
+3		8	5
+2		4	6
+1		2	7
+0		1	8
+**********************************************
+ONE rule only
+
+Look at this:
+
+1  0  0  0  0  0  0  0
+128
+
+The 1 is sitting on 128.
+
+So the answer is 128.
+
+Now:
+0  1  0  0  0  0  0  0
+   64
+0 remains 0
+*********************************
+
+Lets combine them 11000000
+
+128 64 0 0 0 0 0 0
+
+128+64 = 192
+*********************************
+10100000
+128 0 32 0 0 0 0 0
+128+32 = 160
+***************************
+1   1  0  1 0 0 0 0
+128 64 0 16 0 0 0 0
+208
+**********************
+1   0  1  1   0  1  0  0
+128 0  32 16 0 4  0  0
+180
+***************************

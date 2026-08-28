@@ -1,0 +1,8 @@
+1 bit  →  2 possibilities
+2 bits →  4 possibilities
+3 bits →  8 possibilities
+4 bits →  16 possibilities
+5 bits →  32 possibilities
+6 bits →  64 possibilities
+7 bits →  128 possibilities
+8 bits →  256 possibilities

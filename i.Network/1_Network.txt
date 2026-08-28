@@ -1,0 +1,20 @@
+What is a Network?
+When two or more computers and computing devices connected together with each
+other through communication channels, such as cables or wireless media and sharing
+some files, then it is called a Network.
+A network is used to:
+Allow the connected devices to communicate with each other.
+Enable multiple users to share devices over the network, such as music and video
+servers, printers and scanners.
+The Internet is the largest network in the world and can be called "the network of
+networks".
+Types of Networks
+There are different types of networks. But the main two are LAN and WAN
+1. LAN (Local Area Network) - interconnects computer within a limited area, such as
+residences, schools. e.g.: Wi-Fi, Ethernet
+2. MAN (Metropolitan area network) - used in metropolitan area (cities).
+3. WAN (Wide Area Network) - extends LAN over a large geographic area.
+e.g:- optical fiber cable
+4. SONET (Synchronous Optical Network) - used in submarine.
+
+

@@ -1,0 +1,62 @@
+Your DevOps Networking Journey
+
+1. IPv4 fundamentals ✅
+
+IPv4 = 32 bits
+4 octets
+Binary ↔ decimal
+Network bits / Host bits
+Subnet mask
+CIDR notation
+Network address
+Broadcast address
+Usable host range
+Number of subnets / hosts
+
+2. TCP & UDP ← NEXT
+
+What is a protocol?
+What is TCP?
+What is UDP?
+TCP vs UDP
+Ports
+Source port / destination port
+TCP 3-way handshake
+SYN, SYN-ACK, ACK
+TCP connection termination
+Reliability, ordering, retransmission
+UDP behavior
+Common TCP/UDP ports
+
+3. Then: Application-layer protocols
+
+HTTP / HTTPS
+DNS
+SSH
+FTP/SFTP
+SMTP, etc.
+
+4. Then: How networking actually works
+
+MAC addresses
+ARP
+Switches
+Routers
+Default gateway
+Routing
+NAT
+
+5. Then: DevOps-focused networking
+
+Linux networking commands
+ip
+ping
+traceroute
+ss
+netstat
+curl
+nslookup / dig
+Firewall basics
+Docker networking
+Kubernetes networking
+Cloud networking

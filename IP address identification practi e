@@ -1,0 +1,33 @@
+192.168.50.75/24
+
+Network part -- 192.168.50
+Host part -- 75
+Network address -- 192.168.50.0
+Broadcast address -- 192.168.50.255
+Usable host range -- 192.168.50.1 - 192.168.50.254
+Number of usable devices 254
+
+10.40.75.120/16
+
+Network part: 10.40.
+Host part: 75.120
+Network address: 10.40.0.0
+Broadcast address: 10.40.255.255
+Usable host range: 10.40.0.254 - 10.40.255.254
+Number of usable devices:65534
+
+172.25.100.200/24
+Network part:172.25.100
+Host part:200
+Network address: 172.25.100.0
+Broadcast address: 172.25.100.255
+Usable host range: 172.25.100.1 - 172.25.100.254
+Number of usable devices: 254
+
+10.15.200.50/16
+Network part: 10.15
+Host part: 200.50
+Network address: 10.15.0.0
+Broadcast address: 10.15.255.255
+Usable host range: 10.15.0.1 - 10.15.255.254
+Number of usable devices: 65534

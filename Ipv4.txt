@@ -1,0 +1,30 @@
+General Usage of IPv4
+LANs: Home Wi‑Fi, office networks, small private networks.
+
+WANs: Internet backbone, ISPs, global communication.
+
+Devices: PCs, servers, routers, printers, phones — anything that needs to talk on a network.
+
+Routing: Routers use IPv4 addresses to forward packets to the correct destination.
+
+Cloud services: Public IPs for servers, private IPs inside VPCs.
+
+🚫 Where IPv4 Is Not Used
+IPv6 networks: Modern networks shifting to IPv6 due to IPv4 exhaustion.
+
+Non‑IP protocols: Some industrial or legacy systems use proprietary addressing (e.g., Modbus, CAN bus).
+
+Layer 2 communication: Devices talking directly via MAC addresses (Ethernet) don’t need IPv4.
+
+Offline systems: Standalone machines with no network connection.
+
+⚙️ DevOps Usage of IPv4
+Cloud Infrastructure: In AWS, you define CIDR blocks (like 10.0.0.0/16) for your VPC. These are IPv4 ranges.
+
+Containers & Kubernetes: Pods get IPv4 addresses; Services expose them internally or externally.
+
+CI/CD Pipelines: Build agents, servers, and runners need IPs to communicate.
+
+Security Groups: Firewalls and SGs allow/deny traffic based on IPv4 ranges.
+
+Monitoring & Troubleshooting: Logs often show IPv4 addresses; tracing issues means understanding them.

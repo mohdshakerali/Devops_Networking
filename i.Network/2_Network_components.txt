@@ -1,0 +1,22 @@
+Network Components:
+1. Switch:
+It is a device which connects two or more computers.
+2. Router:
+It is a device which is actually used to connect one network with
+another.
+3. Modem:
+Networking for DevOps
+1It is also a device used for modulation and Demodulation.
+4. Hub:
+It is just a power extension dummy device that just broadcast the
+signals to its connected computers.
+5. NIC:
+It is known as Network Interface Card which is used to connect
+your computer with the internet. It is wireless card preinstalled
+on motherboard now-a-days. It has a MAC (Media Access Control)
+address.
+6. Bridge:
+It is also a networking device that connects multiple LANs (local area
+networks) together to form a larger LAN. It reduces the broadcasting
+part, and it store the MAC address of the computer but now this
+device is also obsoleted and replaced by switch.
