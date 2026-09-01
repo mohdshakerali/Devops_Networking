@@ -1,0 +1,685 @@
+# UDP — User Datagram Protocol
+
+## 1. Full Form
+
+**UDP = User Datagram Protocol**
+
+UDP works at the:
+
+> **Transport Layer (Layer 4)**
+
+TCP and UDP are both Transport Layer protocols.
+
+---
+
+# 2. What is UDP?
+
+UDP is a **connectionless transport protocol**.
+
+This means UDP does **not establish a connection before sending data**.
+
+### TCP:
+
+```text
+SYN
+ ↓
+SYN-ACK
+ ↓
+ACK
+ ↓
+Connection established
+ ↓
+Data
+```
+
+### UDP:
+
+```text
+Data
+ ↓
+Send
+```
+
+There is no TCP-style 3-way handshake before sending UDP data.
+
+---
+
+# 3. Simple Analogy
+
+### TCP = Phone Call 📞
+
+Before talking:
+
+```text
+"Can you hear me?"
+"Yes, can you hear me?"
+"Yes."
+```
+
+Connection is established first.
+
+Then communication starts.
+
+### UDP = Sending a Message 📨
+
+You simply send:
+
+```text
+Message 1
+Message 2
+Message 3
+```
+
+You don't first establish a TCP-style connection.
+
+---
+
+# 4. Does UDP Guarantee Delivery?
+
+**No.**
+
+UDP does not provide TCP's built-in reliable delivery mechanisms.
+
+For example:
+
+```text
+Sender:
+
+A
+B
+C
+D
+```
+
+Some data could fail to arrive:
+
+```text
+Receiver:
+
+A ✅
+B ❌
+C ✅
+D ❌
+```
+
+UDP itself does not provide TCP-style retransmission to automatically resend the missing data.
+
+---
+
+# 5. Does UDP Use TCP-Style ACKs?
+
+**No.**
+
+TCP has built-in mechanisms involving:
+
+```text
+Sequence Numbers
+ACKs
+Retransmission
+Ordering
+```
+
+UDP does not have these TCP reliability mechanisms built into the UDP protocol.
+
+However, an **application using UDP can implement its own acknowledgments, retries, or reliability mechanisms** if it needs them.
+
+Important distinction:
+
+> **UDP itself is not reliable like TCP, but an application built on UDP can add its own reliability.**
+
+---
+
+# 6. Why Use UDP?
+
+If UDP doesn't guarantee delivery like TCP, why use it?
+
+Because sometimes we want:
+
+* Low overhead
+* Simple communication
+* Low latency
+* No TCP connection establishment
+* Application-specific handling of reliability
+
+UDP can be useful for applications where waiting for retransmission of old data may be worse than continuing with newer data.
+
+Examples include:
+
+```text
+DNS
+DHCP
+NTP
+QUIC
+Real-time applications
+Online gaming
+VoIP
+```
+
+---
+
+# 7. Important: UDP Does NOT Always Mean "Faster"
+
+Don't memorize:
+
+> "UDP is always faster than TCP."
+
+That is too simplistic.
+
+A better understanding is:
+
+> **UDP has less protocol overhead and does not perform TCP's connection establishment and built-in reliability mechanisms, which makes it suitable for applications where low overhead or low latency is important.**
+
+Actual performance depends on the application and network.
+
+---
+
+# 8. UDP Ports
+
+UDP uses **port numbers**, just like TCP.
+
+Remember:
+
+```text
+IP Address → Which device?
+Port       → Which service/application?
+```
+
+Example:
+
+```text
+192.168.1.50:53
+```
+
+Here:
+
+```text
+192.168.1.50 → Device IP
+53           → Port
+```
+
+UDP can communicate between a source port and destination port.
+
+Example:
+
+```text
+192.168.1.50:50000
+        │
+        │ UDP
+        ↓
+192.168.1.100:53
+```
+
+Here:
+
+```text
+50000 → Source Port
+53    → Destination Port
+```
+
+---
+
+# 9. UDP Datagram
+
+The unit of data sent using UDP is called a:
+
+> **UDP Datagram**
+
+Conceptually:
+
+```text
+┌─────────────────────────────┐
+│       UDP Header            │
+├─────────────────────────────┤
+│       Application Data      │
+└─────────────────────────────┘
+```
+
+The UDP header is very small and contains **4 main fields**.
+
+---
+
+# 10. UDP Header
+
+```text
+┌─────────────────────────────┐
+│ Source Port                 │
+│ Destination Port            │
+│ Length                      │
+│ Checksum                    │
+└─────────────────────────────┘
+```
+
+## 1. Source Port
+
+Identifies the port on the sending side.
+
+Example:
+
+```text
+50000
+```
+
+---
+
+## 2. Destination Port
+
+Identifies the destination service/application.
+
+Example:
+
+```text
+53
+```
+
+Port 53 is commonly used by DNS.
+
+---
+
+## 3. Length
+
+The Length field indicates the total size of the UDP datagram:
+
+> **UDP Header + Data**
+
+---
+
+## 4. Checksum
+
+The Checksum helps detect whether the UDP datagram was corrupted.
+
+Important:
+
+> **Checksum detects errors; it does NOT provide TCP-style reliability or retransmission.**
+
+---
+
+# 11. Real-World Example — DNS
+
+DNS is a great example of UDP.
+
+Suppose your computer wants to know the IP address of:
+
+```text
+google.com
+```
+
+Your computer may send a DNS query using UDP.
+
+Example:
+
+```text
+Your Computer
+192.168.1.50:50000
+        │
+        │ UDP DNS Request
+        ↓
+DNS Server
+192.168.1.100:53
+```
+
+Here:
+
+```text
+192.168.1.50 → Your computer
+50000        → Source port
+53           → Destination port
+UDP          → Transport protocol
+DNS          → Application protocol
+```
+
+---
+
+# 12. DNS UDP Datagram
+
+Conceptually:
+
+```text
+┌──────────────────────────────┐
+│ Source Port:       50000     │
+│ Destination Port:     53     │
+│ Length:              ...     │
+│ Checksum:            ...     │
+├──────────────────────────────┤
+│ DNS Query                    │
+│ "What is google.com?"        │
+└──────────────────────────────┘
+```
+
+The DNS server processes the request and sends a response back.
+
+Conceptually:
+
+```text
+Your Computer                  DNS Server
+
+192.168.1.50:50000
+       │
+       │ UDP Request
+       ├──────────────────────→
+       │
+       │ UDP Response
+       ←──────────────────────┤
+```
+
+There is no TCP-style:
+
+```text
+SYN
+SYN-ACK
+ACK
+```
+
+before this UDP exchange.
+
+---
+
+# 13. What Happens If a UDP DNS Request Is Lost?
+
+For example:
+
+```text
+Your Computer
+      │
+      │ DNS Request
+      X
+    LOST
+```
+
+UDP itself does not provide TCP-style retransmission.
+
+However, the **DNS application/protocol can retry the request**.
+
+So remember:
+
+> **UDP does not provide built-in TCP-style retransmission, but applications using UDP can implement their own retry mechanisms.**
+
+---
+
+# 14. DNS Uses Only UDP — ❌ WRONG
+
+Don't memorize:
+
+> DNS = UDP only.
+
+That's incorrect.
+
+DNS can use **both UDP and TCP**, depending on the situation.
+
+For basic DNS queries, UDP is commonly used.
+
+So remember:
+
+> **DNS commonly uses UDP, but DNS can also use TCP.**
+
+---
+
+# 15. UDP in DevOps
+
+You will encounter UDP in DevOps, although TCP is generally encountered more often.
+
+### DNS
+
+```text
+DNS
+ ↓
+UDP
+ ↓
+Port 53 commonly
+```
+
+### DHCP
+
+```text
+DHCP
+ ↓
+UDP
+ ↓
+Ports 67 / 68
+```
+
+### NTP
+
+NTP is used for time synchronization.
+
+```text
+NTP
+ ↓
+UDP
+ ↓
+Port 123
+```
+
+### QUIC / HTTP/3
+
+Modern HTTP/3 uses:
+
+```text
+HTTP/3
+   ↓
+ QUIC
+   ↓
+ UDP
+```
+
+This is an important modern example of web traffic using UDP.
+
+---
+
+# 16. Very Important: HTTP ≠ UDP and HTTPS ≠ TCP
+
+This is a common misunderstanding.
+
+Do NOT memorize:
+
+> ❌ UDP = HTTP
+> ❌ TCP = HTTPS
+
+HTTP and HTTPS are not transport protocols.
+
+They are higher-level protocols.
+
+Traditionally:
+
+```text
+HTTP/1.1
+    ↓
+   TCP
+    ↓
+   IP
+```
+
+```text
+HTTP/2
+    ↓
+   TCP
+    ↓
+   IP
+```
+
+Modern HTTP/3:
+
+```text
+HTTP/3
+   ↓
+ QUIC
+   ↓
+  UDP
+   ↓
+  IP
+```
+
+Also:
+
+> **HTTPS means HTTP secured with TLS.**
+
+So TCP/UDP and HTTP/HTTPS are different layers.
+
+---
+
+# 17. TCP vs UDP — Simple Comparison
+
+| TCP                                   | UDP                                    |
+| ------------------------------------- | -------------------------------------- |
+| Transmission Control Protocol         | User Datagram Protocol                 |
+| Connection-oriented                   | Connectionless                         |
+| Uses 3-way handshake                  | No TCP-style handshake                 |
+| Reliable delivery mechanisms built in | No TCP-style reliability mechanisms    |
+| Uses sequence numbers                 | No TCP-style sequence numbers          |
+| Uses ACK mechanisms                   | No TCP-style ACK mechanism             |
+| Retransmission built in               | No TCP-style retransmission            |
+| Ordered byte stream                   | Datagram-based                         |
+| More protocol overhead                | Less protocol overhead                 |
+| Reliability-focused                   | Lightweight/low-overhead communication |
+
+---
+
+# 18. Easy Way to Remember
+
+### TCP
+
+Think:
+
+> **"I want reliable and ordered delivery."**
+
+Examples:
+
+```text
+SSH
+HTTPS over HTTP/1.1 or HTTP/2
+Many APIs
+Databases
+Git
+```
+
+### UDP
+
+Think:
+
+> **"I want lightweight communication and don't need TCP's built-in reliable byte-stream behavior."**
+
+Examples:
+
+```text
+DNS
+DHCP
+NTP
+QUIC / HTTP/3
+Real-time applications
+```
+
+---
+
+# 19. Important DevOps Mental Model
+
+When troubleshooting networking, think:
+
+```text
+Application
+     ↓
+Which service?
+     ↓
+Which port?
+     ↓
+TCP or UDP?
+     ↓
+Which IP address?
+```
+
+For example:
+
+```text
+DNS
+ ↓
+Port 53
+ ↓
+UDP commonly
+ ↓
+DNS Server IP
+```
+
+Or:
+
+```text
+SSH
+ ↓
+Port 22
+ ↓
+TCP
+ ↓
+Server IP
+```
+
+---
+
+# 20. TCP vs UDP — The Most Important Question
+
+Instead of asking:
+
+> "Is this website TCP or UDP?"
+
+Ask:
+
+> **"Which transport protocol is this particular connection using?"**
+
+A modern browser can have different network activities using different protocols.
+
+For example:
+
+```text
+Browser
+   │
+   ├── DNS
+   │     └── UDP commonly
+   │
+   ├── HTTP/1.1 or HTTP/2
+   │     └── TCP
+   │
+   └── HTTP/3
+         └── QUIC → UDP
+```
+
+---
+
+# 21. One-Line Summary
+
+> **UDP (User Datagram Protocol) is a connectionless, lightweight transport protocol that sends datagrams without TCP's built-in connection establishment, ordering, acknowledgments, and retransmission mechanisms.**
+
+For your DevOps journey, the most important things to remember are:
+
+```text
+UDP
+│
+├── Connectionless
+├── No TCP-style 3-way handshake
+├── Low protocol overhead
+├── Datagram-based
+├── Source Port
+├── Destination Port
+├── Length
+├── Checksum
+├── No TCP-style built-in reliability
+│
+└── Common examples:
+      ├── DNS
+      ├── DHCP
+      ├── NTP
+      └── QUIC / HTTP/3
+```
+
+# ⭐ Golden Rules
+
+> **TCP → reliability and ordered byte-stream delivery**
+
+> **UDP → connectionless, lightweight datagram delivery**
+
+> **IP address → Which device?**
+
+> **Port → Which service/application?**
+
+> **UDP header → Source Port + Destination Port + Length + Checksum**
+
+> **DNS commonly uses UDP port 53, but DNS can also use TCP.**
+
+> **HTTP/HTTPS are not the same thing as TCP/UDP.**
+
+> **HTTP/3 uses QUIC over UDP.**
