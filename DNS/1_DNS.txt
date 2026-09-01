@@ -1,0 +1,276 @@
+Yes 👍 We'll **learn first, questions/exercises later**.
+
+We'll go slowly, just like we did with IPv4 and TCP/UDP. I won't jump ahead or overload you.
+
+# DNS — Step 1: What happens when you type a website?
+
+Suppose you open:
+
+```text
+https://youtube.com
+```
+
+You know from our previous learning that ultimately your computer needs an **IP address** to communicate with the destination.
+
+But you typed:
+
+```text
+youtube.com
+```
+
+not:
+
+```text
+142.xxx.xxx.xxx
+```
+
+So your computer needs to find:
+
+> **"What IP address belongs to youtube.com?"**
+
+That's where DNS comes in.
+
+```text
+youtube.com
+      ↓
+     DNS
+      ↓
+    IP address
+```
+
+For example, conceptually:
+
+```text
+youtube.com
+      ↓
+DNS lookup
+      ↓
+142.250.x.x
+```
+
+Then your computer can use that IP address to establish the required network connection.
+
+---
+
+# Step 2: DNS is not the connection itself
+
+This is **very important** for DevOps.
+
+DNS's job is primarily:
+
+> **Find information about a domain name.**
+
+It doesn't mean:
+
+> "Connect me to the website."
+
+Think about the stages:
+
+```text
+          DNS
+           ↓
+youtube.com → IP address
+           ↓
+          IP
+           ↓
+       TCP/UDP
+           ↓
+         Port
+           ↓
+      Application
+```
+
+You already learned the lower parts:
+
+### IP
+
+Identifies the network destination.
+
+```text
+192.168.1.50
+```
+
+### Port
+
+Identifies the service/application endpoint.
+
+```text
+443
+```
+
+### TCP/UDP
+
+Transport the data.
+
+Now we're adding:
+
+### DNS
+
+Helps you discover the destination information from a name.
+
+---
+
+# Step 3: What is a domain name?
+
+Take:
+
+```text
+www.example.com
+```
+
+This is a **domain name**.
+
+Humans prefer names because they're easier to remember.
+
+Instead of remembering:
+
+```text
+93.184.x.x
+```
+
+we can use:
+
+```text
+example.com
+```
+
+DNS maintains information that allows systems to associate names with network information.
+
+---
+
+# Step 4: DNS is bigger than just Domain → IP
+
+This is where I want you to build the correct mental model early.
+
+DNS can store different types of information.
+
+For example:
+
+```text
+example.com
+      ↓
+     DNS
+      ↓
+ ┌───────────────┐
+ │ A             │ → IPv4 address
+ │ AAAA          │ → IPv6 address
+ │ CNAME         │ → another hostname
+ │ MX            │ → mail server
+ │ NS            │ → DNS server
+ │ TXT           │ → text information
+ └───────────────┘
+```
+
+We'll learn these records properly later.
+
+For now, remember:
+
+> **DNS is a distributed naming system that stores and provides information associated with domain names.**
+
+The most common thing you'll see initially is:
+
+```text
+hostname → IP address
+```
+
+---
+
+# Step 5: Where does DNS actually happen?
+
+When your Linux server needs to resolve:
+
+```text
+google.com
+```
+
+it doesn't magically know Google's IP.
+
+It asks a **DNS resolver/server**.
+
+Very simplified:
+
+```text
+Your application
+      ↓
+Your operating system
+      ↓
+DNS resolver
+      ↓
+DNS infrastructure
+      ↓
+Answer
+      ↓
+IP address
+```
+
+For example:
+
+```text
+server
+  |
+  | "What is the IP of example.com?"
+  ↓
+DNS resolver
+  |
+  | "The answer is..."
+  ↓
+93.184.x.x
+```
+
+We'll soon break down **exactly who the resolver is, where it gets the answer from, and what happens when you run `dig`**.
+
+---
+
+# Step 6: One DevOps concept you should remember
+
+Suppose an application reports:
+
+```text
+could not resolve host: database.example.com
+```
+
+Don't immediately think:
+
+> "The database is down."
+
+The problem might be:
+
+```text
+Application
+     ↓
+DNS lookup ❌
+     ↓
+database.example.com
+```
+
+The application may not even have reached the database yet.
+
+This is why DNS troubleshooting is important for DevOps.
+
+---
+
+## Our next step
+
+Now that the basic idea is clear, we'll learn the **most important part**:
+
+### 🔥 What REALLY happens when your server resolves `google.com`
+
+We'll trace the journey:
+
+```text
+Application
+   ↓
+Linux
+   ↓
+DNS resolver
+   ↓
+Root DNS
+   ↓
+.com DNS
+   ↓
+Authoritative DNS
+   ↓
+IP address
+```
+
+And I'll explain **each one slowly**, without jumping into complicated DNS terminology.
