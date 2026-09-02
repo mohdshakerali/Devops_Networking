@@ -1,0 +1,36 @@
+
+; <<>> DiG 9.18.39-0ubuntu0.24.04.7-Ubuntu <<>> google.com SOA
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 25519
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 4, ADDITIONAL: 9
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;google.com.			IN	SOA
+
+;; ANSWER SECTION:
+google.com.		56	IN	SOA	ns1.google.com. dns-admin.google.com. 974394558 900 900 1800 60
+
+;; AUTHORITY SECTION:
+google.com.		327967	IN	NS	ns4.google.com.
+google.com.		327967	IN	NS	ns1.google.com.
+google.com.		327967	IN	NS	ns2.google.com.
+google.com.		327967	IN	NS	ns3.google.com.
+
+;; ADDITIONAL SECTION:
+ns2.google.com.		155584	IN	A	216.239.34.10
+ns2.google.com.		155584	IN	AAAA	2001:4860:4802:34::a
+ns1.google.com.		155584	IN	A	216.239.32.10
+ns1.google.com.		155584	IN	AAAA	2001:4860:4802:32::a
+ns3.google.com.		216719	IN	A	216.239.36.10
+ns3.google.com.		127914	IN	AAAA	2001:4860:4802:36::a
+ns4.google.com.		262538	IN	A	216.239.38.10
+ns4.google.com.		19484	IN	AAAA	2001:4860:4802:38::a
+
+;; Query time: 73 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Wed Sep 02 05:22:20 IST 2026
+;; MSG SIZE  rcvd: 333
+
