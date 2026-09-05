@@ -1,0 +1,281 @@
+Yes. At this point, we can **stop adding DNS records**. You have enough DNS knowledge for practical DevOps troubleshooting.
+
+Now we'll move into **Linux networking commands**, but I want to teach them in a proper order rather than giving you a random list of commands.
+
+# 🚀 Next: Linux Networking Commands for DevOps
+
+The goal is not to memorize 30 commands.
+
+The goal is to be able to answer:
+
+> **"My application cannot connect. Where exactly is the problem?"**
+
+We'll build the commands around that question.
+
+## Our learning sequence
+
+### 1. Network interfaces & IP configuration
+
+First understand what your machine has:
+
+```bash
+ip addr
+ip link
+ip route
+```
+
+You'll learn:
+
+* Which network interface is active?
+* What is my IP?
+* What is my subnet?
+* What is my default gateway?
+* Is the interface UP or DOWN?
+
+---
+
+### 2. Connectivity
+
+Then:
+
+```bash
+ping
+```
+
+You'll learn how to check:
+
+```text
+My machine
+    ↓
+Gateway
+    ↓
+Internet
+    ↓
+Remote host
+```
+
+And importantly, we'll learn **what ping can prove and what it cannot prove**.
+
+---
+
+### 3. Routing
+
+Then:
+
+```bash
+ip route
+```
+
+We'll understand things like:
+
+```text
+default via 10.240.84.1 dev wlo1
+```
+
+and answer:
+
+> "Where will Linux send this packet?"
+
+This is extremely important for DevOps.
+
+---
+
+### 4. DNS troubleshooting
+
+You've already learned DNS concepts, so now we'll use:
+
+```bash
+dig
+resolvectl
+nslookup
+```
+
+We'll troubleshoot:
+
+```text
+DNS working?
+        ↓
+Hostname resolving?
+        ↓
+Correct IP?
+        ↓
+Correct DNS server?
+```
+
+---
+
+### 5. Ports and listening services
+
+Then we'll learn:
+
+```bash
+ss
+```
+
+For example:
+
+```bash
+ss -lntp
+```
+
+You'll be able to answer:
+
+> "Is anything actually listening on port 8080?"
+
+This connects directly to the things you previously saw such as:
+
+```text
+Connection refused
+```
+
+---
+
+### 6. Testing application connections
+
+Then:
+
+```bash
+curl
+```
+
+For example:
+
+```bash
+curl -v https://example.com
+```
+
+This lets us move beyond:
+
+> "Can I reach the server?"
+
+and start asking:
+
+> "Can I actually establish the application connection?"
+
+We'll eventually break it down into:
+
+```text
+DNS
+ ↓
+IP connectivity
+ ↓
+TCP connection
+ ↓
+TLS
+ ↓
+HTTP
+ ↓
+Application
+```
+
+---
+
+### 7. Packet-level troubleshooting
+
+Finally:
+
+```bash
+tcpdump
+```
+
+This is where you'll actually **see packets**.
+
+For example:
+
+```bash
+sudo tcpdump -i wlo1 port 53
+```
+
+You already used `tcpdump` for DNS, so we'll build on that.
+
+---
+
+# 🧭 The final troubleshooting flow
+
+Eventually, when someone says:
+
+> "The website isn't working."
+
+You should be able to systematically check:
+
+```text
+                 Application failing
+                         │
+                         ↓
+                  Is DNS working?
+                         │
+                    dig / resolvectl
+                         │
+                         ↓
+                  Do I have an IP?
+                         │
+                      ip addr
+                         │
+                         ↓
+                  Is route correct?
+                         │
+                      ip route
+                         │
+                         ↓
+                 Can I reach destination?
+                         │
+                        ping
+                         │
+                         ↓
+                  Is TCP port open?
+                         │
+                         ss / curl
+                         │
+                         ↓
+                    Is TLS okay?
+                         │
+                       curl
+                         │
+                         ↓
+                  Is HTTP working?
+                         │
+                       curl
+                         │
+                         ↓
+                 Need packet evidence?
+                         │
+                      tcpdump
+```
+
+That is **real DevOps troubleshooting thinking**.
+
+---
+
+# 🟢 Let's start with `ip`
+
+Don't start memorizing commands yet.
+
+Run this on your Zorin machine:
+
+```bash
+ip addr
+```
+
+Paste the complete output here.
+
+We'll take **your actual machine output** and learn:
+
+1. `lo`
+2. `wlo1`
+3. `eno1`
+4. `docker0`
+5. `br-*`
+6. `veth*`
+7. `inet`
+8. `inet6`
+9. `UP/DOWN`
+10. subnet/prefix
+11. broadcast address
+
+Then we'll move directly to:
+
+```bash
+ip route
+```
+
+and connect the two together.
