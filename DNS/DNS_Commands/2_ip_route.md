@@ -1,5 +1,3 @@
-Absolutely. Here is a **copy-paste-ready note** for `ip route`, using dummy IP addresses so you can save it for later reference.
-
 # Linux Networking — `ip route` Command
 
 ## 1. What is `ip route`?

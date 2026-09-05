@@ -1,4 +1,3 @@
-Absolutely. Here is a **copy-paste-ready note** for `ip addr`, using dummy IP addresses so your personal IP is not included.
 
 # Linux Networking — `ip addr` Command
 
